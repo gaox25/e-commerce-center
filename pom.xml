@@ -1,21 +1,108 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
+
   <groupId>com.gaoxi.springcloud</groupId>
   <artifactId>e-commerce-center</artifactId>
-  <packaging>war</packaging>
   <version>1.0-SNAPSHOT</version>
-  <name>e-commerce-center Maven Webapp</name>
+  <!-- 配置父工程pom.xml，作为聚合其他模块 -->
+
+  <!-- 表明是一个父工程，聚合管理其他模块 -->
+  <packaging>pom</packaging>
+
+  <!-- 父工程的名称 -->
+  <name>e-commerce-center</name>
   <url>http://maven.apache.org</url>
-  <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
-  <build>
-    <finalName>e-commerce-center</finalName>
-  </build>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <!-- 指定依赖们的版本 -->
+    <junit.version>4.12</junit.version>
+    <log4j.version>2.17.2</log4j.version>
+    <lombok.version>1.18.20</lombok.version>
+    <!-- 没有和教程保持一致 -->
+    <mysql.version>8.0.33</mysql.version>
+    <druid.version>1.1.17</druid.version>
+    <mybatis.spring.boot.version>2.2.0</mybatis.spring.boot.version>
+  </properties>
+
+  <!-- 通过depencyManagement 配置各个依赖和版本-->
+  <!--
+   dependencyManagement主要用于锁定版本，本身并不引入依赖jar，
+   所以配置完之后刷新maven并不会引入依赖
+   -->
+  <dependencyManagement>
+    <dependencies>
+      <!-- 配置了Spring Boot的依赖 -->
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-dependencies</artifactId>
+        <version>2.2.2.RELEASE</version>
+        <!--
+         1.type:pom 和 scope:import 配合使用
+         2.表示父项目的子模块，在引入springboot相关依赖时，锁定版本为2.2.2.RELEASE
+         3.通过pom + import解决maven单继承机制，因为maven项目只能继承一个父项目
+           比如，此处的父项目是spring-boot，如果还想继承spring cloud作为父项目，
+           此时就采用这种方式实现
+         -->
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <!-- 配置Spring Cloud -->
+      <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-dependencies</artifactId>
+        <version>Hoxton.SR1</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <!-- 配置Spring Cloud Alibaba -->
+      <dependency>
+        <groupId>com.alibaba.cloud</groupId>
+        <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+        <version>2.1.0.RELEASE</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <!-- 配置MySQL connector -->
+      <dependency>
+        <groupId>mysql</groupId>
+        <artifactId>mysql-connector-java</artifactId>
+        <version>${mysql.version}</version>
+      </dependency>
+      <!-- 配置Druid -->
+      <dependency>
+        <groupId>com.alibaba</groupId>
+        <artifactId>druid</artifactId>
+        <version>${druid.version}</version>
+      </dependency>
+      <!-- 配置Spring Boot整合MyBatis的依赖 -->
+      <dependency>
+        <groupId>org.mybatis.spring.boot</groupId>
+        <artifactId>mybatis-spring-boot-starter</artifactId>
+        <version>${mybatis.spring.boot.version}</version>
+      </dependency>
+      <!-- 配置log4j -->
+      <dependency>
+        <groupId>org.apache.logging.log4j</groupId>
+        <artifactId>log4j</artifactId>
+        <version>${log4j.version}</version>
+      </dependency>
+      <!-- 配置junit -->
+      <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>${junit.version}</version>
+      </dependency>
+      <!-- 配置lombok -->
+      <dependency>
+        <groupId>org.projectlombok</groupId>
+        <artifactId>lombok</artifactId>
+        <version>${lombok.version}</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
 </project>
