@@ -13,6 +13,10 @@
   <!-- 父工程的名称 -->
   <name>e-commerce-center</name>
   <url>http://maven.apache.org</url>
+  <!-- 列出了父项目/父工程聚合管理的子模块/子项目 -->
+  <modules>
+    <module>member-service-provider-10000</module>
+  </modules>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

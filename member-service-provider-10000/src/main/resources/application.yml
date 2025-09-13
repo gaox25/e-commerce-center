@@ -1,0 +1,20 @@
+#application.yml文件中的所有的:后面都要跟一个空格
+server:
+  port: 10000
+
+spring:
+  application:
+    name: member-service-provider-10000 #配置应用的名称
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://localhost:3306/e_commerce_center_db?useSSL=true&useUnicode=true&characterEncoding=UTF-8
+    username: root
+    password:
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml #指定mapper.xml文件位置，在target/classes/mapper下
+  type-aliases-package: com.gaoxi.springcloud.entity #指定实体类所在的包，这样就只通过类名就可以访问
+
+
+
+
