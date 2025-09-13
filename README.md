@@ -84,4 +84,31 @@ Spring Boot做了很多封装和自动配置，所以隐藏了许多细节
 1. Maven使用dependencyManagement元素来提供一种管理依赖版本号的方式，通常在项目packaging为pom，中使用dependencyManagement元素
 
 2. 使用pom.xml中的dependencyManagement元素能让所有在子项目中引用一个依赖，Maven会沿着父子层次向上走，直到找到一个拥有dependencyManagement元素的项目，然后它就会使用dependencyManagement元素中指定的版本号
+
 3. 好处：如果有多个子项目都引用同一个依赖，则可以避免在每个使用的子项目里都声明一个版本号，当升级或切换到另一个版本时，只需要在顶层父容器里更新，而不需要分别在子项目中修改；另外如果某个子项目需要另外的一个版本，只需要申明version就行
+
+4. dependencyManagement里只是声明依赖，并不实现引入，因此子项目需要显式地声明需要的依赖
+
+5. 如果不在子项目中声明依赖，是不会从父项目中继承下来的，只有在子项目中写了该依赖项，并且没有指定具体版本，才会从父项目中继承该项，并且version和scope都读取自父pom
+
+   ![image-20250912162533672](/Users/firespite/Library/Application Support/typora-user-images/image-20250912162533672.png)
+
+6. 如果子项目中指定了版本号，那么会使用子项目中指定的jar版本
+
+## 创建会员中心微服务注意事项
+
+1. 前端如果是以json格式来发送添加信息member，那么需要使用@RequestBody，才能将数据封装到
+     对应的bean中，同时保证http的请求头的content-type是对应
+
+2. 如果前端是以表单形式或parameter形式提交了，则不需要使用@RequestBody，才会进行对象参数封装，
+   同时保证http的请求头的content-type是对应
+
+3. 在进行SpringBoot应用程序测试时，引入的JUnit是org.junit.jupiter.api.Test
+
+4. 运行程序时，一定要确保XxxxMapper.xml文件 被自动放到的target目录的classes指定目录，这里规定的路径在resources/application.yml中规定
+
+   ```yaml
+   mybatis:
+     mapper-locations: classpath:mapper/*.xml #指定mapper.xml文件位置，在target/classes/mapper下
+     type-aliases-package: com.gaoxi.springcloud.entity #指定实体类所在的包，这样就只通过类名就可以访问
+   ```
