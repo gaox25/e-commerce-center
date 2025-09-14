@@ -17,6 +17,13 @@
 
     <!-- 引入相关的依赖 -->
     <dependencies>
+
+        <!-- 引入Eureka Client的场景启动器，依然使用版本仲裁 -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
+
         <!-- 引入WebStarter -->
         <!-- 使用版本仲裁，从父项目中获取version -->
         <dependency>

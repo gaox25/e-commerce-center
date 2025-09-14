@@ -21,6 +21,17 @@ logging:
     org.springframework.web.servlet.DispatcherServlet: DEBUG
     org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: TRACE
 
+#配置一下Eureka Client
+eureka:
+  client:
+    register-with-eureka: true #将自己注册到Eureka-Server
+    #表示从Eureka Server获取/抓取注册信息，如果是单节点，是可以不配置，
+    #如果是一个集群，则必须配置true，才能配合Ribbon使用负载均衡功能
+    fetch-registry: true
+    service-url:
+      #表示将自己注册到哪个Eureka Server，这里怎么写要结合实际情况
+      defaultZone: http://localhost:9001/eureka
+
 
 
 
