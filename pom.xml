@@ -17,6 +17,7 @@
   <modules>
     <module>member-service-provider-10000</module>
     <module>member-service-consumer-80</module>
+    <module>e_commerce_center-common-api</module>
   </modules>
 
   <properties>

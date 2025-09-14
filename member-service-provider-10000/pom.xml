@@ -71,6 +71,19 @@
             <artifactId>spring-boot-starter-test</artifactId>
         </dependency>
 
+        <!-- 引入e_commerce_center-common-api -->
+        <!-- 坐标
+         artifactId=e_commerce_center-common-api
+         groupId=com.gaoxi.springcloud
+         version=1.0-SNAPSHOT
+         -->
+        <dependency>
+            <groupId>com.gaoxi.springcloud</groupId>
+            <artifactId>e_commerce_center-common-api</artifactId>
+<!--            <version>1.0-SNAPSHOT</version>-->
+            <version>${project.version}</version>
+        </dependency>
+
     </dependencies>
 
     <properties>
