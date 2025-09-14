@@ -1,0 +1,12 @@
+server:
+  port: 80
+
+spring:
+  application:
+    name: member-service-consumer-80
+
+logging:
+  level:
+    org.springframework.web: DEBUG
+    org.springframework.web.servlet.DispatcherServlet: DEBUG
+    org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: TRACE

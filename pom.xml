@@ -16,6 +16,7 @@
   <!-- 列出了父项目/父工程聚合管理的子模块/子项目 -->
   <modules>
     <module>member-service-provider-10000</module>
+    <module>member-service-consumer-80</module>
   </modules>
 
   <properties>

@@ -4,16 +4,16 @@ import com.gaoxi.springcloud.entity.Member;
 import com.gaoxi.springcloud.entity.Result;
 import com.gaoxi.springcloud.service.MemberService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
 @Slf4j
 @RestController
 public class MemberController {
+    private static final Logger log = LoggerFactory.getLogger(MemberController.class);
     //装配MemberService
     @Resource
     private MemberService memberService;
@@ -30,7 +30,8 @@ public class MemberController {
     //添加方法/接口
     //这里应该如何提交数据？
     @PostMapping("/member/save")
-    public Result save(Member member) {
+    public Result save(@RequestBody Member member) {
+        log.info("member-service-provider member{}", member);
         int affected = memberService.save(member);
         if (affected > 0) {//说明添加成功了
             return Result.success("添加会员成功", affected);

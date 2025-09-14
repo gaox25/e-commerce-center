@@ -112,3 +112,6 @@ Spring Boot做了很多封装和自动配置，所以隐藏了许多细节
      mapper-locations: classpath:mapper/*.xml #指定mapper.xml文件位置，在target/classes/mapper下
      type-aliases-package: com.gaoxi.springcloud.entity #指定实体类所在的包，这样就只通过类名就可以访问
    ```
+
+http://localhost:10000/member/save?name=张飞&pwd=123&mobile=12345678&email=zf@gmail.com&gender=1
+
