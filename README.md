@@ -126,7 +126,7 @@ Spring Boot做了很多封装和自动配置，所以隐藏了许多细节
 
 ### Eureka项目架构分析
 
-![image-20250914153049981](/Users/firespite/Library/Application Support/typora-user-images/image-20250914153049981.png)
+![Eureka-Architecture](/Users/firespite/Documents/e-commerce-center/readme-assets/Eureka-Architecture.png)
 
 
 
