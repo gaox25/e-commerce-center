@@ -113,5 +113,20 @@ Spring Boot做了很多封装和自动配置，所以隐藏了许多细节
      type-aliases-package: com.gaoxi.springcloud.entity #指定实体类所在的包，这样就只通过类名就可以访问
    ```
 
-http://localhost:10000/member/save?name=张飞&pwd=123&mobile=12345678&email=zf@gmail.com&gender=1
+## 引出Eureka
+
+### Eureka可以做什么
+
+1. 在企业级项目中，服务消费访问请求往往会存在高并发
+2. 如果只有一个服务提供方，可用性差
+3. 所以服务提供方往往是一个集群，也就是有多个服务提供模块在运行
+4. 那么这个时候，就存在一个问题，就是服务消费方，怎么去发现可以使用的服务
+5. 当服务消费方，发现了可以使用的服务后(可能有多个，又存在一个问题就是到底调用A服务，还是B服务的问题，这就是引出了服务注册和负载均衡)
+6. Eureka就可以解决上述问题
+
+### Eureka项目架构分析
+
+![image-20250914153049981](/Users/firespite/Library/Application Support/typora-user-images/image-20250914153049981.png)
+
+
 
