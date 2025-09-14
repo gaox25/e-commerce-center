@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.gaoxi.springcloud</groupId>
+        <artifactId>e-commerce-center</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>e-commerce-eureka-server-9001</artifactId>
+
+    <!-- 引入的依赖可以参考前面的member-service-provider-10000 -->
+    <!-- 引入相关的依赖，如果有需要，可以调整 -->
+    <dependencies>
+        <!-- 引入Eureka Server的场景启动器starter 使用版本仲裁，在父工程中自动指定 -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
+        </dependency>
+
+        <!-- 引入WebStarter -->
+        <!-- 使用版本仲裁，从父项目中获取version -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <!--
+          用于spring boot程序的监控系统，可以实现系统的健康检测
+          可以通过httplocalhost:9001/actuator 看到相关的连接和信息
+          -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
+        <!-- lombok,使用版本仲裁 -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <!-- 引入test-starter,使用版本仲裁，在父项目中的spring-boot-dependencies中能找到 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+        </dependency>
+
+        <!-- 引入e_commerce_center-common-api -->
+        <!-- 坐标
+         artifactId=e_commerce_center-common-api
+         groupId=com.gaoxi.springcloud
+         version=1.0-SNAPSHOT
+         -->
+        <dependency>
+            <groupId>com.gaoxi.springcloud</groupId>
+            <artifactId>e_commerce_center-common-api</artifactId>
+            <!--            <version>1.0-SNAPSHOT</version>-->
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
+
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+</project>
