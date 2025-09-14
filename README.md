@@ -126,7 +126,9 @@ Spring Boot做了很多封装和自动配置，所以隐藏了许多细节
 
 ### Eureka项目架构分析
 
-![Eureka-Architecture](/Users/firespite/Documents/e-commerce-center/readme-assets/Eureka-Architecture.png)
+![Eureka-Architecture](/readme-assets/Eureka-Architecture.png)
 
-
+1. 会员中心-提供服务的，在项目中，会做成集群，提供高可用
+2. Eureka Server有必要的话，也可以做成集群
+3. 
 
