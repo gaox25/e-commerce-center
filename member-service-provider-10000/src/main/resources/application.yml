@@ -31,7 +31,11 @@ eureka:
     service-url:
       #表示将自己注册到哪个Eureka Server，这里怎么写要结合实际情况
       defaultZone: http://localhost:9001/eureka
-
+#  instance:
+#    #客户端向服务端发送心跳的时间间隔，为1s（默认是30s）
+#    lease-renewal-interval-in-seconds: 1
+#    #服务端收到最后一次心跳后等待的时间上限，为2s（默认是90s），超时将剔除服务
+#    lease-expiration-duration-in-seconds: 2
 
 
 

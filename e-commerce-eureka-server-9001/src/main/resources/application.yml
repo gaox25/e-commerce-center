@@ -14,4 +14,8 @@ eureka:
       #设置于eureka server交互的模块，查询和注册服务都需要依赖这个地址
       #defaultZone: http://localhost:9001/eureka/
       defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
-
+#  server:
+#    #是否开启自我保护机制，默认为true-开启，false-关闭
+#    enable-self-preservation: false
+#    #设置超时时间为2秒，即在2秒钟收不到心跳包，就认为是超时
+#    eviction-interval-timer-in-ms: 2000
