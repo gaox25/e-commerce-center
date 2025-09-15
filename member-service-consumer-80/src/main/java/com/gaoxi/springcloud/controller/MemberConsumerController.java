@@ -5,6 +5,8 @@ import com.gaoxi.springcloud.entity.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import javax.annotation.Resource;
+import java.util.List;
 
 
 @RestController
@@ -41,6 +44,29 @@ public class MemberConsumerController {
     //装配RestTemplate，因为已经配置过了
     @Resource
     private RestTemplate restTemplate;
+
+    //装配DiscoveryClient
+    @Resource
+    private DiscoveryClient discoveryClient;
+
+    @GetMapping("/member/consumer/discovery")
+    public Object discovery() {
+        List<String> services = discoveryClient.getServices();
+        //遍历
+        for (String s : services) {
+            log.info("服务名={}", s);
+            //获取这个服务名下的所有实例
+            List<ServiceInstance> instances = discoveryClient.getInstances(s);
+            for (ServiceInstance instance :instances) {
+                log.info("id={},host={},port={},uri={}",
+                        instance.getInstanceId(),
+                        instance.getHost(),
+                        instance.getPort(),
+                        instance.getPort());
+            }
+        }
+        return discoveryClient;
+    }
 
     //方法/接口 添加Member对象到数据库里的表
     @PostMapping("/member/consumer/save")
