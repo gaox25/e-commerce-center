@@ -20,4 +20,6 @@ eureka:
     fetch-registry: true
     service-url:
       #表示将自己注册到哪个Eureka Server，这里怎么写要结合实际情况
-      defaultZone: http://localhost:9001/eureka
+      #defaultZone: http://localhost:9001/eureka
+      #将本微服务注册到多个Eureka Server(Eureka Server集群)，使用逗号,间隔即可
+      defaultZone: http://eureka9001.com:9001/eureka,http://eureka9002.com:9002/eureka
