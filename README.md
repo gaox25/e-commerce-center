@@ -197,6 +197,31 @@ Spring Boot做了很多封装和自动配置，所以隐藏了许多细节
 1. 因为member-service-provider-10000和member-service-provider-10002作为一个集群提供服务，因此需要将spring.application.name进行统一
 2. 这样消费方通过统一的别名进行负载均衡调用 
 
-### DiscoveryClient
+### 通过DiscoveryClient获取注册服务列表
 
-如果希望在服务消费方/服务提供方Eureka Client获取到Eureka Server的服务注册信息，使用DiscoveryClient
+如果希望在服务消费方/服务提供方Eureka Client获取到Eureka Server的服务注册信息，使用DiscoveryClient即可
+
+### Spring Cloud Ribbon
+
+1. Spring Cloud Ribbon是基于Netflix Ribbon实现的一套客户端负载均衡的工具。
+2. Ribbon的主要功能是提供客户端负载均衡算法和服务调用
+3. Ribbon客户端组件提供一系列完善的配置项如连接超时、重试等
+4. Ribbon会基于某种规则（如简单轮询、随机连接等）去连接指定服务
+5. 程序员很容易使用Ribbon的负载均衡算法实现负载均衡
+6. 一句话：Ribbon：负载均衡 + RestTemplate调用
+
+![Ribbon-Architecture](/readme-assets/Ribbon-Architecture.png)
+
+![Ribbon-Load-Algorithm](/readme-assets/Ribbon-Load-Algorithm.png)
+
+### 负载均衡/Load Balancer/LB分类
+
+1. 集中式LB
+   * 即在服务的消费方和提供方之间使用独立的LB设施（可以是硬件，如F5，也可以是软件，如Nginx），由设施负责把访问请求通过某种策略转发至服务的提供方
+   * LB（Load Balance 负载均衡）
+2. 进程内LB
+   * 将LB逻辑集成到消费方，消费方从注册中心获知有哪些地址可用（获取后缓存在消费方），然后再从这些地址中选择出一个合适的服务地址
+   * Ribbon就属于进程内LB，它只是一个类库，集成于消费方进程，消费方通过它来获取到服务提供方的地址
+
+学习这些组件就是为了解决分布式的各种问题
+
