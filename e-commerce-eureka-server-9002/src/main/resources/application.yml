@@ -1,21 +1,18 @@
 server:
-  port: 9001
+  port: 9002
 
 #配置Eureka Server
 eureka:
   instance:
-    hostname: eureka9001.com #服务实例名
+    hostname: eureka9002.com #服务实例名
   client:
     #配置不向注册中心注册
     register-with-eureka: false
     #表示自己就是注册中心，作用就是维护注册的服务实例，不需要去检索
     fetch-registry: false
     service-url:
-      #设置于eureka server交互的模块，查询和注册服务都需要依赖这个地址
-      #defaultZone: http://localhost:9001/eureka/
-      #defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
-      #因为要搭建Eureka Server集群，所以需要相互注册，因此修改defaultZone，注册到Eureka-Server-9002上
-      defaultZone: http://eureka9002.com:9002/eureka/
+      #这里注册到eureka9001 server
+      defaultZone: http://eureka9001.com:9001/eureka/
 #  server:
 #    #是否开启自我保护机制，默认为true-开启，false-关闭
 #    enable-self-preservation: false
