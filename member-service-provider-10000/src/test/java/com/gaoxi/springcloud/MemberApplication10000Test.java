@@ -9,11 +9,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
 
-import static jdk.nashorn.internal.runtime.regexp.joni.Config.log;
-
 @Slf4j
 @SpringBootTest
-public class MemberApplicationTest {
+public class MemberApplication10000Test {
     //装配MemberDao
     @Resource
     private MemberDao memberDao;

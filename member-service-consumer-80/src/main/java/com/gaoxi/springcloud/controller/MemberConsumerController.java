@@ -20,8 +20,22 @@ import javax.annotation.Resource;
 public class MemberConsumerController {
     //定义member_service_provider_url，这是一个基础url地址
     //使用command + shift + U，将所选内容转为大写
+    //public static final String MEMBER_SERVICE_PROVIDER_URL =
+    //        "http://localhost:10000";
+    //使用微服务集群member-service-provider，因此基础url地址修改为服务模块的注册别名
+    /*
+     说明：
+     1.MEMBER-SERVICE-PROVIDER就是服务提供方[集群]，注册到Eureka Server的名称/别名
+     2.也就是服务提供方[集群]对外暴露的名称为MEMBER-SERVICE-PROVIDER
+     3.MEMBER-SERVICE-PROVIDER 目前有两个 Avaliability Zones
+       一个是：member-service-provider:10002
+       另一个是：member-service-provider:10000
+     4.需要增加一个注解@LoadBalanced，赋予RestTemplate负载均衡的能力
+       也就是说会根据负载均衡算法，来选择某个服务去访问，默认是一个轮询算法，
+       当然也可以自己配置负载均衡算法
+     */
     public static final String MEMBER_SERVICE_PROVIDER_URL =
-            "http://localhost:10000";
+            "http://MEMBER-SERVICE-PROVIDER";
     private static final Logger log = LoggerFactory.getLogger(MemberConsumerController.class);
 
     //装配RestTemplate，因为已经配置过了

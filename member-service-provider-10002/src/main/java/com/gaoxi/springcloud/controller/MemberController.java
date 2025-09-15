@@ -34,7 +34,7 @@ public class MemberController {
         log.info("member-service-provider member{}", member);
         int affected = memberService.save(member);
         if (affected > 0) {//说明添加成功了
-            return Result.success("添加会员成功_member-service-provider-10000", affected);
+            return Result.success("添加会员成功_member-service-provider-10002", affected);
         } else {
             return Result.error("401", "添加会员失败了");
         }
@@ -47,7 +47,7 @@ public class MemberController {
         Member member = memberService.queryMemberById(id);
         //使用Result把查询到的结果返回
         if (member != null) {
-            return Result.success("查询会员成功_member-service-provider-10000", member);
+            return Result.success("查询会员成功_member-service-provider-10002", member);
         } else {
             return Result.error("402", "ID=" + id + "不存在");
         }

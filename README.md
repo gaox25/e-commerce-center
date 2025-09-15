@@ -188,5 +188,15 @@ Spring Boot做了很多封装和自动配置，所以隐藏了许多细节
 
 ![Erueka-Server-Cluster](/readme-assets/Erueka-Server-Cluster.png)
 
+### 集群服务提供方服务
 
+新建服务提供方微服务 ，和现有的服务提供方微服务组建为集群，并注册到Eureka Server集群
 
+![Service-Provider-Cluster](/readme-assets/Service-Provider-Cluster.png)
+
+1. 因为member-service-provider-10000和member-service-provider-10002作为一个集群提供服务，因此需要将spring.application.name进行统一
+2. 这样消费方通过统一的别名进行负载均衡调用 
+
+### DiscoveryClient
+
+如果希望在服务消费方/服务提供方Eureka Client获取到Eureka Server的服务注册信息，使用DiscoveryClient

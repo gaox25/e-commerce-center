@@ -1,10 +1,10 @@
 #application.yml文件中的所有的:后面都要跟一个空格
 server:
-  port: 10000
+  port: 10002
 
 spring:
   application:
-    #name: member-service-provider-10000 #配置应用的名称
+    #name: member-service-provider-10002 #配置应用的名称
     name: member-service-provider #配置应用的名称，因为要组建集群，此处使用和10002统一的别名
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
