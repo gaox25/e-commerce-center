@@ -1,0 +1,19 @@
+server:
+  port: 80
+
+spring:
+  application:
+    name: e-commerce-consumer-openfeign-80
+
+#配置Eureka Client
+eureka:
+  client:
+    register-with-eureka: true #将自己注册到Eureka-Server
+    #表示从Eureka Server获取/抓取注册信息，如果是单节点，是可以不配置，
+    #如果是一个集群，则必须配置true，才能配合Ribbon使用负载均衡功能
+    fetch-registry: true
+    service-url:
+      #表示将自己注册到哪个Eureka Server，这里怎么写要结合实际情况
+      #defaultZone: http://localhost:9001/eureka
+      #将本微服务注册到多个Eureka Server(Eureka Server集群)，使用逗号,间隔即可
+      defaultZone: http://eureka9001.com:9001/eureka,http://eureka9002.com:9002/eureka

@@ -225,3 +225,30 @@ Spring Boot做了很多封装和自动配置，所以隐藏了许多细节
 
 学习这些组件就是为了解决分布式的各种问题
 
+### Spring Cloud Open Feign
+
+#### OpenFeign是什么
+
+1. OpenFeign是一个声明式WebService客户端，使用OpenFeign让编写Web Service客户端更简单（WebService就是用来进行远程调用的）
+2. 它的使用方法是定义一个服务接口，然后在上面添加注解
+3. OpenFeign也支持可插拔式的编码器和解码器（所谓插拔式，就是加上注解就有用，去掉就没用）
+4. Spring Cloud对OpenFeign进行了封装使其支持了Spring MVC标准注解和HttpMessageConverters
+5. OpenFeign可以和Eureka和Ribbon组合使用以支持负载均衡
+
+#### Feign和OpenFeign的区别
+
+* Feign
+  * Feign是Spring Cloud组件中的一个轻量级RESTful的HTTP服务客户端
+  * Feign内置了Ribbon，用来做客户端负载均衡，去调用服务注册中心的服务
+  * Feign的使用方式是：使用Feign的注解定义接口，调用服务注册中心的服务
+  * Feign支持的注解和用法参考官方文档
+  * Feign本身不支持Spring MVC的注解，它有自己的一套注解
+* OpenFeign
+  * OpenFeign是Spring Cloud在Feign的基础上支持了Spring MVC的注解，如@RequestMapping等等
+  * OpenFeign的@FeignClient可以解析Spring MVC的@RequestMapping注解下的接口
+  * OpenFeign通过动态代理的方式产生实现类，实现类中做负载均衡并调用其他服务
+* 精简一句话：OpenFeign就是在Feign基础上做了加强，有些程序员为了方便，说Feign就是指的OpenFeign
+
+#### Eureka + OpenFeign的架构
+
+![Eureka-OpenFeign-Architecture](/readme-assets/Eureka-OpenFeign-Architecture.png)

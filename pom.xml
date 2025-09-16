@@ -21,6 +21,7 @@
     <module>e-commerce-eureka-server-9001</module>
     <module>e-commerce-eureka-server-9002</module>
     <module>member-service-provider-10002</module>
+    <module>e-commerce-consumer-openfeign-80</module>
   </modules>
 
   <properties>
