@@ -252,3 +252,59 @@ Spring Boot做了很多封装和自动配置，所以隐藏了许多细节
 #### Eureka + OpenFeign的架构
 
 ![Eureka-OpenFeign-Architecture](/readme-assets/Eureka-OpenFeign-Architecture.png)
+
+### 什么是网关，为什么要有网关？
+
+#### 没有使用网关服务的问题分析
+
+1. 前端项目需要维护不同的后端服务（ip/访问接口），非常麻烦
+2. 如果调用的是后端集群服务，存在负载均衡的问题
+3. 没有断言和过滤的机制
+4. 因此引出网关服务的必要性
+
+![Without-GateWay-Architecture](/readme-assets/Without-GateWay-Architecture.png)
+
+#### 使用网关服务的架构分析
+
+1. 网关服务提供的功能
+
+   * 对外提供统一的调用接口，根据不同的请求url，转发到对应的后端服务[通过配置即可 断言+过滤]
+   * 实现负载均衡
+   * 实现限流
+   * 实现熔断
+   * 实现鉴权，判断请求的url是否合法，以及访问的用户的权限
+
+2. 使用网关服务的架构图
+
+   ![With-GateWay-Architecture](/readme-assets/With-GateWay-Architecture.png)
+
+### Spring Cloud Gateway
+
+#### 什么是Gateway
+
+1. Gateway是在Spring生态系统之上构建的API网关服务，基于Spring、Spring Boot和Project Reactor等技术
+2. Gateway旨在提供一种简单而有效的方式来对API进行路由，以及提供一些强大的过滤器功能，例如：熔断、限流、重试等
+
+#### Gateway和Zuul的区别
+
+1. Spring Cloud Gateway作为Spring Cloud生态系统中的网关，目标是替代Zuul
+2. Spring Cloud Gateway是基于Spring WebFlux框架实现的
+3. Spring WebFlux框架底层则使用了高性能的Reactor模式通信框架Netty，提升了网关性能
+
+#### Gateway的特性
+
+Spring Cloud Gateway基于Spring Framework（支持Spring WebFlux），Project Reactor和Spring Boot进行构建，具有如下特性：
+
+1. 动态路由
+2. 可以对路由指定Predicate（断言，也就是判断）和Filter（过滤器）
+3. 集成Hystrix的断路由功能
+4. 集成Spring Cloud服务发现功能
+5. 请求限流功能
+6. 支持路径重写
+
+#### 创建Gateway项目架构
+
+1. 通过网关暴露的接口，实现调用真正的服务
+2. 网关本身也是一个微服务模块
+
+![GateWay-Project-Architecture](/readme-assets/GateWay-Project-Architecture.png)
