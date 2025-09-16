@@ -17,3 +17,9 @@ eureka:
       #defaultZone: http://localhost:9001/eureka
       #将本微服务注册到多个Eureka Server(Eureka Server集群)，使用逗号,间隔即可
       defaultZone: http://eureka9001.com:9001/eureka,http://eureka9002.com:9002/eureka
+
+#使用过OpenFeign日志后关闭
+#logging:
+#  level:
+#    #对MemberFeignServcie接口调用过程打印信息-Debug
+#    com.gaoxi.springcloud.service.MemberFeignService: debug
