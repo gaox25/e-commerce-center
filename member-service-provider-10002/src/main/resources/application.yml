@@ -40,6 +40,14 @@ eureka:
 #    #服务端收到最后一次心跳后等待的时间上限，为2s（默认是90s），超时将剔除服务
 #    lease-expiration-duration-in-seconds: 2
 
+#ribbon:
+#  #1.这里是设置feign客户端超时时间(OpenFeign默认是支持ribbon的，所以在ribbon下设置)，默认是1秒
+#  #2.ReadTimeout: 8000，建立连接从服务提供方获取可用资源所用的全部时间
+#  #3.时间单位是毫秒
+#  ReadTimeout: 8000
+#  #两端连接所用的时间
+#  ConnectionTimeout: 8000
+
 
 
 

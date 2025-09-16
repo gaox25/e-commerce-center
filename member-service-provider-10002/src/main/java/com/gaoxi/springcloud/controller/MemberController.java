@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.concurrent.TimeUnit;
 
 @Slf4j
 @RestController
@@ -44,6 +45,12 @@ public class MemberController {
     //这里使用url的占位符+@PathVariable
     @GetMapping("/member/get/{id}")
     public Result getMemberById(@PathVariable("id") Long id) {
+//        //模拟超时，休眠5s
+//        try {
+//            TimeUnit.MILLISECONDS.sleep(5000);
+//        } catch (InterruptedException e) {
+//            throw new RuntimeException(e);
+//        }
         Member member = memberService.queryMemberById(id);
         //使用Result把查询到的结果返回
         if (member != null) {
