@@ -26,6 +26,14 @@ spring:
           uri: lb://member-service-provider
           predicates: #断言，可以有多种形式的断言
             - Path=/member/get/**
+            #断言，要求：只有2025-11-18 12:35:50 之后的请求才进行匹配/转发，不满足该要求的，不处理
+            #- After=2025-11-18T12:35:50.593+08:00[Asia/Shanghai]
+            #断言：要求：只有2025-08-18 12:35:50 之前的请求才进行匹配/转发，不满足该要求的，不处理
+            #- Before=2025-08-18T12:35:50.593+08:00[Asia/Shanghai]
+            #- Before=2025-09-18T12:35:50.593+08:00[Asia/Shanghai]
+            #断言：要求：只有2025-08-18 12:35:50 和 只有2025-09-16 12:35:50的请求才进行匹配/转发，不满足该要求的，不处理
+            #- Between=2025-08-18T12:35:50.593+08:00[Asia/Shanghai],2025-09-16T12:35:50.593+08:00[Asia/Shanghai]
+            #- Between=2025-08-18T12:35:50.593+08:00[Asia/Shanghai],2025-09-18T12:35:50.593+08:00[Asia/Shanghai]
         - id: member_route02 #路由的id，程序员自己配置，要求唯一
           #uri: http://localhost:10000
           uri: lb://member-service-provider
