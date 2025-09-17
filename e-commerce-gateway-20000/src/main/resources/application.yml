@@ -5,29 +5,34 @@ spring:
   application:
     #后面可能有很多个gateway，所以这里应用名使用e-commerce-gateway
     name: e-commerce-gateway
-#  cloud:
-#    gateway:
-#      routes: #这里配置路由，可以配置多个路由，在代码中是List<RouteDefinition> routes
-#        - id: member_route01 #路由的id，程序员自己配置，要求唯一
-#          #gateway最终访问的url是url = uri+path
-#          #匹配后，提供服务的路由地址：也可以是外网比如：http://www.bing.com
-#          #比如：客户端/浏览器请求的url为 http://localhost:20000/member/get/1
-#          #如果根据路径Path匹配成功了，最终访问的url/转发url就是url=http://localhost:10000/member/get/1
-#          #如果匹配失败，则由gateway返回一个404的错误信息给到客户端
-#          #疑问：这里的uri是固定的，在当前情况下，可以不使用Eureka Server，后面会改进，会使用灵活的方法配置，就会使用到Eureka Server
-#          uri: http://localhost:10000
-#          predicates: #断言，可以有多种形式的断言
-#            - Path=/member/get/**
-#        - id: member_route02 #路由的id，程序员自己配置，要求唯一
-#          uri: http://localhost:10000
-#          predicates: #断言，可以有多种形式的断言
-#            #这时如果浏览器/客户端 访问gateway 的url http://localhost:20000/member/save
-#            #如果匹配Path成功，就进行组合，最终访问的url为：http://localhost:10000/member/save
-#            - Path=/member/save
-#        - id: member_route03 #路由的id，程序员自己配置，要求唯一
-#          uri: http://www.baidu.com
-#          predicates: #断言，可以有多种形式的断言
-#            - Path=/
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          #标志启用DiscoveryClient 服务发现
+          enabled: true
+      routes: #这里配置路由，可以配置多个路由，在代码中是List<RouteDefinition> routes
+        - id: member_route01 #路由的id，程序员自己配置，要求唯一
+          #gateway最终访问的url是url = uri+path
+          #匹配后，提供服务的路由地址：也可以是外网比如：http://www.bing.com
+          #比如：客户端/浏览器请求的url为 http://localhost:20000/member/get/1
+          #如果根据路径Path匹配成功了，最终访问的url/转发url就是url=http://localhost:10000/member/get/1
+          #如果匹配失败，则由gateway返回一个404的错误信息给到客户端
+          #疑问：这里的uri是固定的，在当前情况下，可以不使用Eureka Server，后面会改进，会使用灵活的方法配置，就会使用到Eureka Server
+          #uri: http://localhost:10000
+          #使用动态路由，这里指定的是服务名，需要用小写
+          #1.lb 协议名 member-service-provider 是注册到Eureka Server的服务名
+          #2.默认情况下，默认负载均衡算法是轮询
+          uri: lb://member-service-provider
+          predicates: #断言，可以有多种形式的断言
+            - Path=/member/get/**
+        - id: member_route02 #路由的id，程序员自己配置，要求唯一
+          #uri: http://localhost:10000
+          uri: lb://member-service-provider
+          predicates: #断言，可以有多种形式的断言
+            #这时如果浏览器/客户端 访问gateway 的url http://localhost:20000/member/save
+            #如果匹配Path成功，就进行组合，最终访问的url为：http://localhost:10000/member/save
+            - Path=/member/save
 
 #配置Eureka Client
 eureka:

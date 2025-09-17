@@ -27,27 +27,27 @@ public class GateWayRoutesConfig {
      *           predicates: #断言，可以有多种形式的断言
      *             - Path=/
      */
-    @Bean
-    public RouteLocator myRouteLocator04(RouteLocatorBuilder routeLocatorBuilder) {
-        RouteLocatorBuilder.Builder routes = routeLocatorBuilder.routes();
-        /**
-         * 1.下面的方法分别指定了id，uri和path
-         * 2.Function<PredicateSpec, Route.AsyncBuilder> fn
-         *  (1)是一个函数式接口
-         *  (2)接收的类型是PredicateSpec，返回的类型是Route.AsyncBuilder
-         *  (3)r -> r.path("/member/get/**").uri("http://localhost:10000")就是lambda表达式
-         * 3.可以理解这是一个规定的写法
-         */
-        return routes.route("member_route04", r -> r.path("/member/get/**")
-                            .uri("http://localhost:10000"))
-                            .build();
-    }
-
-    @Bean
-    public RouteLocator myRouteLocator05(RouteLocatorBuilder routeLocatorBuilder) {
-        RouteLocatorBuilder.Builder routes = routeLocatorBuilder.routes();
-        return routes.route("member_route05", r -> r.path("/member/save")
-                        .uri("http://localhost:10000"))
-                .build();
-    }
+//    @Bean
+//    public RouteLocator myRouteLocator04(RouteLocatorBuilder routeLocatorBuilder) {
+//        RouteLocatorBuilder.Builder routes = routeLocatorBuilder.routes();
+//        /**
+//         * 1.下面的方法分别指定了id，uri和path
+//         * 2.Function<PredicateSpec, Route.AsyncBuilder> fn
+//         *  (1)是一个函数式接口
+//         *  (2)接收的类型是PredicateSpec，返回的类型是Route.AsyncBuilder
+//         *  (3)r -> r.path("/member/get/**").uri("http://localhost:10000")就是lambda表达式
+//         * 3.可以理解这是一个规定的写法
+//         */
+//        return routes.route("member_route04", r -> r.path("/member/get/**")
+//                            .uri("http://localhost:10000"))
+//                            .build();
+//    }
+//
+//    @Bean
+//    public RouteLocator myRouteLocator05(RouteLocatorBuilder routeLocatorBuilder) {
+//        RouteLocatorBuilder.Builder routes = routeLocatorBuilder.routes();
+//        return routes.route("member_route05", r -> r.path("/member/save")
+//                        .uri("http://localhost:10000"))
+//                .build();
+//    }
 }

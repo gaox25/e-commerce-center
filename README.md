@@ -308,3 +308,6 @@ Spring Cloud Gateway基于Spring Framework（支持Spring WebFlux），Project R
 2. 网关本身也是一个微服务模块
 
 ![GateWay-Project-Architecture](/readme-assets/GateWay-Project-Architecture.png)
+
+#### Gateway项目加上动态路由
+
