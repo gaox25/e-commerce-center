@@ -325,3 +325,32 @@ Spring Cloud Gateway基于Spring Framework（支持Spring WebFlux），Project R
 4. Filter在pre类型的过滤器可以做参数校验、权限校验、流量监控、日志输出、协议转换等
 5. 在post类型的过滤器中可以做响应内容、响应头的修改、日志的输出、流量监控等有着非常重要的作用
 6. 一句话总结：路由转发 + 执行过滤器链
+
+### Sleuth/Zipkin
+
+#### 概念
+
+1. 在微服务框架中，一个由客户端发起的请求在后端系统中会经过多个不同的服务节点调用，来协同产生最后的请求结果，每一个请求都会形成一条复杂的分布式服务调用链路
+
+2. 链路中的任何一环出现高延时或错误都会引起整个请求最后的失败，因此对整个服务的的调用进行链路追踪和分析就非常的重要
+
+3. Sleuth和Zipkin的简单关系图
+
+   ![Sleuth-Zipkin-Relation](/readme-assets/Sleuth-Zipkin-Relation.png)
+
+4. Sleuth提供了一套完整的服务跟踪的解决方案 并兼容Zipkin
+
+5. 总结：Sleuth做链路追踪，Zipkin做数据搜集/存储/可视化
+
+#### Sleuth工作原理
+
+* 一条链路通过Trace Id唯一标识，Span标识发起的请求信息，各span通过parent id关联起来
+
+* Trace：类似于树结构的Span集合，表示一条调用链路，存在唯一标识
+
+* Span：基本工作单元，表示调用链路来源，通俗的理解span就是一次请求信息
+
+* spans的parent/child关系图形化
+
+  ![Sleuth-Span-Structure](/readme-assets/Sleuth-Span-Structure.png)
+
