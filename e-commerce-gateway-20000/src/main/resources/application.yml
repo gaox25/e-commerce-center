@@ -50,9 +50,9 @@ spring:
             #- Query=email, [\w-]+@([a-zA-Z]+\.)+[a-zA-Z]+
             #断言：要求：请求转发的IP是127.0.0.1，才能匹配/断言成功
             #- RemoteAddr=127.0.0.1
-          filters:
-            - AddRequestParameter=color, blue
-            - AddRequestParameter=address, beijing
+#          filters:
+#            - AddRequestParameter=color, blue
+#            - AddRequestParameter=address, beijing
         - id: member_route02 #路由的id，程序员自己配置，要求唯一
           #uri: http://localhost:10000
           uri: lb://member-service-provider
