@@ -311,3 +311,6 @@ Spring Cloud Gateway基于Spring Framework（支持Spring WebFlux），Project R
 
 #### Gateway项目加上动态路由
 
+1. 配置好动态路由后Gateway会根据注册中心上的微服务名，为请求创建动态路由，实现动态路由功能
+2. 使用的lb协议支持负载均衡-轮询算法
+3. 配置自己的负载均衡算法
