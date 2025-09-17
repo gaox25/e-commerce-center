@@ -25,6 +25,8 @@ spring:
           #2.默认情况下，默认负载均衡算法是轮询
           uri: lb://member-service-provider
           predicates: #断言，可以有多种形式的断言
+            #断言，类型，Path，可以有多个，用,隔开
+            #- Path=/member/get/**,/member/save
             - Path=/member/get/**
             #断言，要求：只有2025-11-18 12:35:50 之后的请求才进行匹配/转发，不满足该要求的，不处理
             #- After=2025-11-18T12:35:50.593+08:00[Asia/Shanghai]
@@ -42,7 +44,12 @@ spring:
             #使用postman测试，在Header中添加key=Host，value=www.tom.com
             #- Host=**.tom.**
             #断言：要求：请求是Get/Post方式才匹配/断言成功，请求方式有多个，用,隔开
-            - Method=POST,GET
+            #- Method=POST,GET
+            #断言：要求：请求有参数email，并且满足电子邮件的基本格式，才能匹配/断言成功
+            #测试链接：http://localhost:20000/member/get/1?email=tom@gmail.com
+            #- Query=email, [\w-]+@([a-zA-Z]+\.)+[a-zA-Z]+
+            #断言：要求：请求转发的IP是127.0.0.1，才能匹配/断言成功
+            #- RemoteAddr=127.0.0.1
         - id: member_route02 #路由的id，程序员自己配置，要求唯一
           #uri: http://localhost:10000
           uri: lb://member-service-provider
