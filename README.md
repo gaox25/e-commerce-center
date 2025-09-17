@@ -314,3 +314,14 @@ Spring Cloud Gateway基于Spring Framework（支持Spring WebFlux），Project R
 1. 配置好动态路由后Gateway会根据注册中心上的微服务名，为请求创建动态路由，实现动态路由功能
 2. 使用的lb协议支持负载均衡-轮询算法
 3. 配置自己的负载均衡算法
+
+### Gateway Filter
+
+#### Gateway是如何工作的
+
+1. 客户端向Spring Cloud Gateway发出请求，然后在Gateway Handler Mapping中找到与请求相匹配的路由，将其发送到Gateway Web Handler
+2. Handler再通过指定的过滤器链来将请求发送到实际的业务执行逻辑
+3. 过滤器可能会在发送代理请求之前（pre）或之后（post）执行业务逻辑，即可以在请求被路由之前或者之后对请求进行处理，可以理解为：在对Http请求断言匹配成功后，可以通过网关的过滤机制，对Http请求处理
+4. Filter在pre类型的过滤器可以做参数校验、权限校验、流量监控、日志输出、协议转换等
+5. 在post类型的过滤器中可以做响应内容、响应头的修改、日志的输出、流量监控等有着非常重要的作用
+6. 一句话总结：路由转发 + 执行过滤器链

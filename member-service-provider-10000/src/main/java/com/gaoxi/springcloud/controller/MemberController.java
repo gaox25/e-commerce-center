@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
@@ -44,7 +45,10 @@ public class MemberController {
     //查询的方法/接口
     //这里使用url的占位符+@PathVariable
     @GetMapping("/member/get/{id}")
-    public Result getMemberById(@PathVariable("id") Long id) {
+    public Result getMemberById(@PathVariable("id") Long id, HttpServletRequest request) {
+        //添加HttpServletRequest，验证filter
+        String color = request.getParameter("color");
+        String address = request.getParameter("address");
         //模拟超时，休眠5s
 //        try {
 //            TimeUnit.MILLISECONDS.sleep(5000);
@@ -54,7 +58,7 @@ public class MemberController {
         Member member = memberService.queryMemberById(id);
         //使用Result把查询到的结果返回
         if (member != null) {
-            return Result.success("查询会员成功_member-service-provider-10000", member);
+            return Result.success("查询会员成功_member-service-provider-10000" + " " + color + " " + address, member);
         } else {
             return Result.error("402", "ID=" + id + "不存在");
         }
