@@ -342,6 +342,8 @@ Spring Cloud Gateway基于Spring Framework（支持Spring WebFlux），Project R
 
 5. 总结：Sleuth做链路追踪，Zipkin做数据搜集/存储/可视化
 
+6. Zipkin的本地访问地址：http://localhost:9411/zipkin/
+
 #### Sleuth工作原理
 
 * 一条链路通过Trace Id唯一标识，Span标识发起的请求信息，各span通过parent id关联起来
@@ -353,4 +355,6 @@ Spring Cloud Gateway基于Spring Framework（支持Spring WebFlux），Project R
 * spans的parent/child关系图形化
 
   ![Sleuth-Span-Structure](/readme-assets/Sleuth-Span-Structure.png)
+
+* 通过Sleuth + Zipkin，可以查看一次调用的深度，以及该链路包含请求，各个请求的耗时，找到请求瓶颈，为优化提供依据（重要）
 

@@ -6,6 +6,13 @@ spring:
   application:
     #name: member-service-provider-10000 #配置应用的名称
     name: member-service-provider #配置应用的名称，因为要组建集群，此处使用和10002统一的别名
+  #配置Sleuth和Zipkin
+  zipkin:
+    base-url: http://localhost:9411
+  sleuth:
+    sampler:
+      #采样率，在0-1之间，1表示全部采集
+      probability: 1
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     url: jdbc:mysql://localhost:3306/e_commerce_center_db?useSSL=true&useUnicode=true&characterEncoding=UTF-8

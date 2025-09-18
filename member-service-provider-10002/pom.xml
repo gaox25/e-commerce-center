@@ -13,6 +13,12 @@
 
     <!-- 引入相关的依赖 -->
     <dependencies>
+        <!-- 引入Sleuth + Zipkin 相关依赖 依然版本仲裁 -->
+        <!-- spring-cloud-starter-zipkin本身也包含了Sleuth -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-zipkin</artifactId>
+        </dependency>
 
         <!-- 引入Eureka Client的场景启动器，依然使用版本仲裁 -->
         <dependency>
