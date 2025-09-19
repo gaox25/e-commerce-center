@@ -1,0 +1,38 @@
+#application.yml文件中的所有的:后面都要跟一个空格
+server:
+  port: 10006
+
+spring:
+  application:
+    name: member-service-nacos-provider
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://localhost:3306/e_commerce_center_db?useSSL=true&useUnicode=true&characterEncoding=UTF-8
+    username: root
+    password:
+  #配置Nacos，将member-service-nacos-provider-10004注册到Nacos Server8848
+  cloud:
+    nacos:
+      discovery:
+        #表示要注册到哪个Nacos Server
+        server-addr: localhost:8848 #配置Nacos Server的地址
+#配置暴露所有的监控点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml #指定mapper.xml文件位置，在target/classes/mapper下
+  type-aliases-package: com.gaoxi.springcloud.entity #指定实体类所在的包，这样就只通过类名就可以访问
+
+logging:
+  level:
+    org.springframework.web: DEBUG
+    org.springframework.web.servlet.DispatcherServlet: DEBUG
+    org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: TRACE
+
+
+
+

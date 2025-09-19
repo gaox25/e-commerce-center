@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gaoxi.springcloud.dao.MemberDao">
+    <!-- 配置实现queryMemberById，可以使用resultType="Member"或者resultMap来接收结果 -->
+    <!-- 为了后续的扩展性，使用resultMap -->
+    <resultMap id="BaseResultMap" type="Member">
+        <result property="id" column="id" jdbcType="BIGINT"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="pwd" column="pwd" jdbcType="VARCHAR"/>
+        <result property="mobile" column="mobile" jdbcType="VARCHAR"/>
+        <result property="email" column="email" jdbcType="VARCHAR"/>
+        <result property="gender" column="gender" jdbcType="TINYINT"/>
+    </resultMap>
+    <select id="queryMemberById" parameterType="Long" resultMap="BaseResultMap">
+        SELECT * FROM `member` WHERE `id` = #{id}
+    </select>
+
+    <!-- 配置实现save方法 -->
+    <insert id="save" parameterType="Member" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `member` (`name`, `pwd`, `mobile`, `email`, `gender`)
+             VALUES (#{name}, MD5(#{pwd}), #{mobile}, #{email}, #{gender})
+    </insert>
+</mapper>

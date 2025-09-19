@@ -358,3 +358,24 @@ Spring Cloud Gateway基于Spring Framework（支持Spring WebFlux），Project R
 
 * 通过Sleuth + Zipkin，可以查看一次调用的深度，以及该链路包含请求，各个请求的耗时，找到请求瓶颈，为优化提供依据（重要）
 
+### Nacos
+
+#### 什么是Nacos
+
+1. 一句话：Nacos就是注册中心：替代Eureka + 配置中心：替代Config；
+2. Nacos：Dynamic Naming and Configuration Service
+3. Nacos：架构理论基础：CAP理论（支持API + CP，可以切换）
+
+#### 引入Nacos的项目架构
+
+1. 引入Nacos不需要像Eureka那样，单独启动一个项目来运行，直接下载运行即可，默认端口8848，http://localhost:8848/nacos/#/login
+
+2. 新建两个服务提供微服务
+
+   * 创建member-service-nacos-provider-10004，并注册到NacosServer8848
+   * 创建member-service-nacos-provider-10006，并注册到NacosServer8848
+
+   视为Nacos Client，注册到Nacos Server 8848
+
+   ![Provider-With-Nacos](/readme-assets/Provider-With-Nacos.png)
+
