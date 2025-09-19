@@ -444,9 +444,68 @@ Spring Cloud Gateway基于Spring Framework（支持Spring WebFlux），Project R
 
       
 
+
+### SpringCloud Alibaba Sentinel
+
+#### Sentinel基础
+
+1. 什么是Sentinel
+
+   随着微服务的流行，服务和服务之间的稳定性变得越来越重要。Sentinel以流量为切入点，从流量控制、熔断降级、系统负载保护等多个维度保护服务的稳定性
+
+   一句话：Sentinel是分布式系统的流量防卫兵，保护你的微服务
+
+2. Sentinel的主要特性
+
+   Sentinel可以完成的功能：绿色方框列出的部分
+
+   ![Sentinel-Features](/readme-assets/Sentinel-Features.png)
+
+#### Sentinel核心功能
+
+1. 流量控制
+
+   比如故宫景区每天只卖8万张票，超过八万的游客，就无法买票进入，只卖N张票，这就是一种限流的手段
+
+2. 熔断降级
+
+   在调用系统的时候，如果调用链路中的某个资源（比如I/O）出现了不稳定，最终会导致请求发生堆积
+
+   熔断降级可以解决这个问题，所谓的熔断降级就是当检测到调用链路中某个资源出现不稳定的表现，例如请求相应时间长或异常比例升高的时候，则对这个资源的调用进行限制，让请求快速失败，避免影响到其他的资源而导致级联故障
+
+3. 系统负载保护
+
+   根据系统能够处理的请求，和允许进来的请求，来做平衡，追求的目标是在系统不被拖垮的情况下，提高系统的吞吐率
+
+4. 消息削峰填谷
+
+   某瞬时来了大流量的请求，而如果此时要处理所有请求，很可能会导致系统负载过高，影响稳定性。但其实可能后面几秒之内都没有消息投递，若直接把多余的消息丢掉则没有充分利用系统处理消息的能力
+
+   Sentinel的Rate Limiter模式能在某一段时间间隔内以匀速方式处理这样的请求，充分利用系统的处理能力，也就是削峰填谷，保证资源的稳定性
+
+#### Sentinel的两个组成部分
+
+1. 核心库：（Java客户端）不依赖任何框架/库，能够运行在所有Java运行时环境（有版本对应关系），对Spring Cloud有较好的支持，用于集成到某个需要被保护的微服务上
+
+2. 控制台：（Dashboard）基于Spring Boot开发，打包后可以直接运行，不需要额外的Tomcat等应用容器，是用来进行监控和展示被保护的微服务的，同时也可以进行限流策略修改等操作
+
    
 
+#### 搭建Sentinel控制台
 
+1. 下载jar包：sentinel-dashboard-1.8.0.jar
 
+2. 进入目录，使用bash命令启动
 
+   ```bash
+   export JAVA_HOME=`/usr/libexec/java_home -v 1.8` #because default JDK is not JDK 8
+   java -jar sentinel-dashboard-1.8.0.jar --server.port=9999
+   ```
 
+3. Sentinel Dashboard的默认端口为8080，使用--server.port=9999指定端口
+
+   http://localhost:8080/#/login
+
+   用户名密码默认均为：sentinel
+
+4. 
