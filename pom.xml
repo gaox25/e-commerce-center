@@ -25,6 +25,7 @@
     <module>e-commerce-gateway-20000</module>
     <module>member-service-nacos-provider-10004</module>
     <module>member-service-nacos-provider-10006</module>
+    <module>member-service-nacos-consumer-80</module>
   </modules>
 
   <properties>

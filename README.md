@@ -379,3 +379,11 @@ Spring Cloud Gateway基于Spring Framework（支持Spring WebFlux），Project R
 
    ![Provider-With-Nacos](/readme-assets/Provider-With-Nacos.png)
 
+3. 配置服务消费方，可以调用到服务提供方的集群，即需要注册服务，也需要发现服务
+
+   ![Consumer-With-Nacos](/readme-assets/Consumer-With-Nacos.png)
+
+   
+
+   
+

@@ -1,0 +1,18 @@
+server:
+  port: 80
+
+spring:
+  application:
+    name: member-service-nacos-consumer-80
+  #配置Nacos
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848 #Nacos Server的地址
+
+
+logging:
+  level:
+    org.springframework.web: DEBUG
+    org.springframework.web.servlet.DispatcherServlet: DEBUG
+    org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: TRACE
