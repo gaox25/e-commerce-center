@@ -14,6 +14,13 @@ spring:
       config:
         server-addr: localhost:8848 #这里指定的是配置中心的地址
         file-extension: yaml #指定yaml格式的配置
+        #group: order #通过设置group来达到配置隔离的目的，此时指定order组的配置，默认是DEFAULT_GROUP
+        #group: seckill
+        #namespace默认值为public，此处指定为alibbaba，将命名空间alibaba的id fd0bdd46-52e8-4e7d-b0ca-b2f4b5d97363复制过来
+        #namespace: fd0bdd46-52e8-4e7d-b0ca-b2f4b5d97363
+        #下面是拿到namespace为baidu，group为search的配置
+        group: search
+        namespace: b9941d0e-5578-4fa8-9008-1c2519c88b75
 #解读
 #1. Nacos 配置客户端/当前的微服务模块，会根据配置，找到配置中心的数据/配置文件
 #2. 通过confing.server-addr: localhost:8848，可以找到配置中心

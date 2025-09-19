@@ -1,3 +1,5 @@
 spring:
   profiles:
     active: dev #指定环境，常见的环境有：开发-dev，测试-test，生产-prod
+    #通过Data Id做配置隔离
+    #active: test #改为test，此时将会拉取Nacos Server中Data Id为e-commerce-nacos-config-client-test.yaml的配置

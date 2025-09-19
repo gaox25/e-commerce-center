@@ -420,6 +420,32 @@ Spring Cloud Gateway基于Spring Framework（支持Spring WebFlux），Project R
    * spring boot中配置文件的加载是存在优先级顺序的，bootstrap.yml优先级高于application.yml
    * @RefreshScope是springcloud原生注解，实现配置信息自动刷新，如果在Nacos Server修改了配置数据，Client端就会得到最新配置
 
+   #### Nacos配置隔离方案
+
+   1. DataId方案：引入Nacos配置中心 + Data Id
+
+      ![Nacos-Seperation-DataId](/readme-assets/Nacos-Seperation-DataId.png)
+
+   2. Group方案
+
+      ![Nacos-Seperation-Group](/readme-assets/Nacos-Seperation-Group.png)
+
+   3. Namespace方案
+
+      ![Nacos-Seperation-Namespace](/readme-assets/Nacos-Seperation-Namespace.png)
+
+   4. Namespace/Group/Data Id关系
+
+      ![Namespace-Group-DataId](/readme-assets/Namespace-Group-DataId.png)
+
+      * Nacos默认的命名空间是public，Namespace主要用来实现配置隔离，隔离范围大
+      * Group默认是DEFAULT_GROUP，Group可以把不同的微服务划分到同一个分组里去
+      * Service就是微服务，相同的Service可以是一个Cluster，Instance就是微服务实例
+
+      
+
+   
+
 
 
 
