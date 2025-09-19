@@ -383,7 +383,44 @@ Spring Cloud Gateway基于Spring Framework（支持Spring WebFlux），Project R
 
    ![Consumer-With-Nacos](/readme-assets/Consumer-With-Nacos.png)
 
-   
+#### 选择AP还是CP
 
-   
+1. CP：服务可以不能用，但必须要保证数据的一致性
+2. AP：数据可以短暂不一致，但最终是需要一致的，无论如何都要保证服务的可用
+3. 取舍：只能在CP和AP选择一个平衡点，大多数都是选择AP模式
+
+#### Nacos切换AP或CP
+
+* Nacos集群默认支持的是CAP原则中的AP原则，但是也可以切换为CP原则（一般不切换）
+* CURL切换命令：$NACOS_SERVER:8848/nacos/v1/ns/operator/switches?entry=serverMode&value=CP
+* 这个不能随意切换，建议保持默认的AP即可
+* 集群环境下所有的服务都要切换
+* 可以使用postman模拟，必须使用put请求，用get和post均无效
+
+#### Nacos配置中心
+
+1. Nacos Server既可以作为注册中心，也可以作为配置中心
+
+2. 新建一个微服务模块作为配置客户端，用于测试获取Nacos Server的配置数据
+
+3. 加入Nacos Server作为配置中心后的项目结构图
+
+   ![ConfigCenter-With-Nacos](/readme-assets/ConfigCenter-With-Nacos.png)
+
+4. 在Nacos Server加入配置
+
+   ![Nacos-Server-Config](/readme-assets/Nacos-Server-Config.png)
+
+5. 注意事项和细节
+
+   * 在配置文件application.yml和bootstrap.yml结合会得到配置文件/资源的地址
+   * 参考文档：https://nacos.io/zh-cn/docs/quick-start-spring-cloud.html
+   * 注意在Nacos Server的配置文件的后缀是.yaml，而不是.yml
+   * 在项目初始化时，要保证先从配置中心进行配置拉取，拉取配置之后，才能保证项目的正常启动，也就是说如果项目不能正常的获取到Nacos Server的配置数据，项目是启动不了的
+   * spring boot中配置文件的加载是存在优先级顺序的，bootstrap.yml优先级高于application.yml
+   * @RefreshScope是springcloud原生注解，实现配置信息自动刷新，如果在Nacos Server修改了配置数据，Client端就会得到最新配置
+
+
+
+
 

@@ -26,6 +26,7 @@
     <module>member-service-nacos-provider-10004</module>
     <module>member-service-nacos-provider-10006</module>
     <module>member-service-nacos-consumer-80</module>
+    <module>e-commerce-nacos-config-client5000</module>
   </modules>
 
   <properties>
