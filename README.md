@@ -558,3 +558,16 @@ Spring Cloud Gateway基于Spring Framework（支持Spring WebFlux），Project R
       * 如果一个线程平均执行时间为0.05秒，就说明在1秒内，可以执行20次，相当于QPS为20
       * 如果一个线程平均执行时间为2秒，说明2秒钟内，才能执行1次请求
 
+5. 通过关联来进行流量控制
+
+   关联的含义：当关联的资源达到阈值时，就限流自己
+
+   需求：通过Sentinel实现流量控制，当调用member-service-nacos-provider-10004的/t2 API接口时，如果QPS超过1，这时调用/t1 API接口 直接失败，抛出异常，此时/t2就是关联的资源，限流的资源就是/t1
+
+   ![Sentinel-Flow-Limitation-Relation](/readme-assets/Sentinel-Flow-Limitation-Relation.png)
+
+   测试：因为测试效果需要同时访问/t1 和 /t2，因此使用postman模拟高并发，访问/t2
+
+   ![Postman-Simulation-High-Concurrency](/readme-assets/Postman-Simulation-High-Concurrency.png)
+
+   在postman执行高并发访问/t2没有结束时，去访问/1才能看到流控异常出现

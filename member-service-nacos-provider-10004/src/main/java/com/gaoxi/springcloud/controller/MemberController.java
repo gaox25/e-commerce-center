@@ -21,6 +21,17 @@ public class MemberController {
     @Resource
     private MemberService memberService;
 
+    //限流规则时在/t1上，如果关联的/t2的QPS达到1，则/t1限流
+    @GetMapping("/t1")
+    public Result t1() {
+        return Result.success("t1()执行...");
+    }
+
+    @GetMapping("/t2")
+    public Result t2() {
+        return Result.success("t2()执行...");
+    }
+
     /* 注意事项和细节
      1.前端如果是以json格式来发送添加信息member，那么需要使用@RequestBody，才能将数据封装到
        对应的bean中，同时保证http的请求头的content-type是对应
