@@ -21,6 +21,9 @@ public class MemberController {
     @Resource
     private MemberService memberService;
 
+    //定义一个执行计数器
+    private static int num = 0;
+
     //限流规则时在/t1上，如果关联的/t2的QPS达到1，则/t1限流
     @GetMapping("/t1")
     public Result t1() {
@@ -39,6 +42,42 @@ public class MemberController {
         //输出线程的信息
         log.info("执行t2() 线程id={}", Thread.currentThread().getId());
         return Result.success("t2()执行...");
+    }
+
+    @GetMapping("/t3")
+    public Result t3() {
+        //让线程休眠300ms，模拟执行时间大于200ms，以测试慢调用比例熔断机制
+        try {
+            TimeUnit.MILLISECONDS.sleep(300);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        return Result.success("t3()执行...");
+    }
+
+    //验证单位时间内的请求数量超过限定请求数量，同时异常比例触发熔断机制
+    @GetMapping("/t4")
+    public Result t4() {
+        //设计异常比例达到50% > 20%
+        if (++num % 2 == 0) {
+            //制造一个异常
+            System.out.println(3 / 0);
+        }
+        log.info("熔断降级测试[异常比例] 执行t4() 线程id = {}", Thread.currentThread().getId());
+        return Result.success("t4()执行...");
+    }
+
+    //设计一个测试案例，满足异常数的阈值，从而触发熔断机制
+    //验证单位时间内的请求数量超过限定请求数量，且异常请求数量大于阈值触发熔断机制
+    @GetMapping("/t5")
+    public Result t5() {
+        //设计出现10次异常，这里需要设计大于6，需要留出几次做测试和加入簇点链路
+        if (++num <= 6) {
+            //制造异常
+            System.out.println(3 / 0);
+        }
+        log.info("熔断降级测试[异常数] 执行t5() 线程id = {}", Thread.currentThread().getId());
+        return Result.success("t5()执行...");
     }
 
     /* 注意事项和细节
