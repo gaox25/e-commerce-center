@@ -16,6 +16,18 @@ spring:
       discovery:
         #表示要注册到哪个Nacos Server
         server-addr: localhost:8848 #配置Nacos Server的地址
+    sentinel:
+      transport:
+        dashboard: localhost:9999 #指定Sentinel控制台的地址
+        #解读
+        #1.transport.port，端口配置会在被监控的微服务的对应的主机上启动Http Server
+        #2.该Http Server会与Sentinel控制台进行交互
+        #3.比如Sentinel控制台添加了一个限流规则，会把规则数据push给这个Http Server
+        #4.Http Server再将这个规则注册到Sentinel中
+        #  简单的讲，transport.port指定被监控的微服务应用与Sentinel控制台交互的端口
+        #5.默认 transport.port是8719，如果该端口被占用，微服务会自动从8719开始依次+1扫描
+        #  直至找到一个没有占用的端口
+        port: 8719 #默认是8719，指定一个端口
 #配置暴露所有的监控点
 management:
   endpoints:

@@ -508,4 +508,42 @@ Spring Cloud Gateway基于Spring Framework（支持Spring WebFlux），Project R
 
    用户名密码默认均为：sentinel
 
-4. 
+#### 引入Sentinel的项目架构
+
+1. 项目结构图
+
+   ![Sentinel-In-Architecture](/readme-assets/Sentinel-In-Architecture.png)
+
+2. 当调用member-service-nacos-provider-10004微服务时，可以监控到请求的url/QPS/响应时间/流量
+
+#### Sentinel监控微服务
+
+1. QPS：Queries Per Second（每秒查询率/每秒请求数量），是服务器每秒响应的查询次数
+
+2. Sentinel采用的是懒加载，只有调用了某个接口/服务，才能看到监控数据
+
+3. 注意事项和细节
+
+   * 流量规则改动，实时生效，不需要重启微服务，Sentinel控制台
+
+   * 在Sentinel配置流量规则时，如何配置通配符问题，比如/member/get/1 /member/get/2统一使用一个规则
+
+     * 方案1：在Sentinel中，/member/get?id=1 和 /member/get?id=2 被统一认为是/member/get 所以只要对/member/get限流就ok了
+
+       对应也要修改服务提供方provider中controller中的方法
+
+       修改为
+
+       ```java
+       @GetMapping(value = "/member/get", params = "id")
+           public Result getMemberById(Long id) {{}
+       ```
+
+       
+
+     * 方案2：URL资源清洗
+
+       可以通过UrlCleaner接口来实现资源清洗，也就是对于/member/get/{id}这个URL，可以统一归集到/member/get/*资源下，实现UrlCleaner接口，并重写clean方法即可
+
+   * 如果Sentinel流控规则没有持久化，当重启被调用API所在微服务模块后，规则会丢失，需要重新添加
+

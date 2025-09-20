@@ -43,8 +43,13 @@ public class MemberController {
 
     //查询的方法/接口
     //这里使用url的占位符+@PathVariable
+    //使用资源清洗的方式，以便Sentinel以/member/get的方式监控该方法的QPS
     @GetMapping("/member/get/{id}")
     public Result getMemberById(@PathVariable("id") Long id, HttpServletRequest request) {
+    //修改方法参数的传递方式，以便Sentinel以/member/get的方式监控该方法的QPS，改为通过?传递参数的方式
+    //访问方式修改为了 http://localhost:10004/member/get/?id=1
+//    @GetMapping(value = "/member/get", params = "id")
+//    public Result getMemberById(Long id) {
         //添加HttpServletRequest，验证filter
         String color = request.getParameter("color");
         String address = request.getParameter("address");

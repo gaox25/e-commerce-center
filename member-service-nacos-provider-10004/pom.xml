@@ -14,6 +14,12 @@
     <!-- 引入相关的依赖 -->
     <dependencies>
 
+        <!-- 引入alibaba-sentinel-starter 场景启动器 仍然使用版本仲裁 -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
+        </dependency>
+
         <!-- 引入Nacos starter，其实就是Nacos的场景启动器 仍然使用版本仲裁-->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
