@@ -522,7 +522,7 @@ Spring Cloud Gateway基于Spring Framework（支持Spring WebFlux），Project R
 
 2. Sentinel采用的是懒加载，只有调用了某个接口/服务，才能看到监控数据
 
-3. 注意事项和细节
+3. 通过QPS来进行流量控制/注意事项和细节
 
    * 流量规则改动，实时生效，不需要重启微服务，Sentinel控制台
 
@@ -571,3 +571,55 @@ Spring Cloud Gateway基于Spring Framework（支持Spring WebFlux），Project R
    ![Postman-Simulation-High-Concurrency](/readme-assets/Postman-Simulation-High-Concurrency.png)
 
    在postman执行高并发访问/t2没有结束时，去访问/1才能看到流控异常出现
+
+6. 通过Warm up来进行流量控制
+
+   Warm Up介绍
+
+   1. 概述
+      * 当流量突然增大的时候，我们常常会希望系统从空闲状态到繁忙状态的切换的时间长一些。即如果系统在此之前长期处于空闲的状态，我们希望处理请求的数量是缓步的增多，经过预期的时间以后，到达系统处理请求个数的最大值。Warm Up（冷启动/预热）模式就是为了实现这个目的的
+      * 应用场景：秒杀在开启瞬间，大流量很容易造成冲垮系统，Warm up可慢慢的把流量翻入，最终将阈值增长到设置阈值
+   2. 梳理
+      * 通常冷启动的过程系统允许通过的QPS曲线
+      * 默认coldFactor为3，即请求的QPS从threshold/3开始，经预热时长主键升至设定的QPS阈值
+      * 这里的threshold就是最终要达到的QPS阈值
+
+   需求
+
+   1. 通过Sentinel实现 流量控制，使用Warm up
+
+   2. 调用member-service-nacos-provider-10004的/t2 API接口，将QPS设置为9，设置Warm up值为3
+
+   3. 含义为 请求/t2的QPS从threshold / 3（9 / 3 = 3）开始，经预热时长（3秒）逐渐升至设定的QPS阈值（9）
+
+   4. 为什么是9 / 3，这个3是默认冷启动加载因子 coldFactor=3
+
+   5. 测试预期效果：在前3秒，如果访问/t2的QPS超过3，会直接报错，在3秒后，访问/t2的QPS，小于等于9，是正常访问
+
+      ![Sentinel-Flow-Limitation-Warmup](/readme-assets/Sentinel-Flow-Limitation-Warmup.png)
+
+   注意事项和细节
+
+   1. 测试Warm up不是很好测试，如果出不来可以尝试，调整流控规则：比如将QPS调整为11，Warm up预热时间6秒
+   2. 如果请求停止（即：一段时间内没有达到阈值），Warm up过程将重复，可以理解这是一个弹性过程
+
+7. 通过排队来进行流量控制
+
+   基本介绍：
+
+   1. 排队方式：这种方式严格控制了请求通过的间隔时间，也即是让请求匀速通过，对应的是漏桶算法
+   2. 例如：阈值QPS=2时，每隔500ms才允许通过下一个请求
+   3. 这种方式主要用于处理间隔性突发的流量，例如消息队列。比如这样的场景，在某一秒有大量的请求到来，而接下来的几秒则处于空闲状态，我们希望系统能够在接下来的空闲期间逐渐处理这些请求，而不是在第一秒直接拒绝多余的请求，类似于前面说的削峰填谷
+   4. 匀速排队，阈值必须设置为QPS 
+
+   需求
+
+   1. 需求：通过Sentinel实现 流量控制-排队
+
+   2. 调用member-service-nacos-provider-10004的 /t2 API接口，将QPS设置为1
+
+   3. 当调用/t2的QPS超过1时，不拒绝请求，而是排队等待，依次执行
+
+   4. 当等待时间超过10秒，则为等待超时
+
+      ![Sentinel-Flow-Limit-Queue](/readme-assets/Sentinel-Flow-Limit-Queue.png)

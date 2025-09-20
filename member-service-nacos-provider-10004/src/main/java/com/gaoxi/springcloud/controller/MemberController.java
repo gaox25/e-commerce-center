@@ -29,6 +29,15 @@ public class MemberController {
 
     @GetMapping("/t2")
     public Result t2() {
+        //让线程休眠1s，模拟执行时间为1s -> 当多少个请求就会造成超时呢？超过10个就会
+        //验证流量控制-排队规则
+        try {
+            TimeUnit.MILLISECONDS.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        //输出线程的信息
+        log.info("执行t2() 线程id={}", Thread.currentThread().getId());
         return Result.success("t2()执行...");
     }
 
