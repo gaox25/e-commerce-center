@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 @Slf4j
 @RestController
@@ -59,6 +61,14 @@ public class MemberController {
 //        } catch (InterruptedException e) {
 //            throw new RuntimeException(e);
 //        }
+        //让线程休眠1s，模拟执行时间，以验证Sentinel以线程数来进行流控
+        //重启后需要重新在Sentinel Dashboard中再次添加流控规则
+//        try {
+//            TimeUnit.MILLISECONDS.sleep(1000);
+//        } catch (InterruptedException e) {
+//            throw new RuntimeException(e);
+//        }
+//        System.out.println("enter getMemberById...当前线程id=" + Thread.currentThread().getId() + "时间=" + new Date());
         Member member = memberService.queryMemberById(id);
         //使用Result把查询到的结果返回
         if (member != null) {

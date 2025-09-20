@@ -516,7 +516,7 @@ Spring Cloud Gateway基于Spring Framework（支持Spring WebFlux），Project R
 
 2. 当调用member-service-nacos-provider-10004微服务时，可以监控到请求的url/QPS/响应时间/流量
 
-#### Sentinel监控微服务
+#### Sentinel监控微服务/流量控制
 
 1. QPS：Queries Per Second（每秒查询率/每秒请求数量），是服务器每秒响应的查询次数
 
@@ -546,4 +546,15 @@ Spring Cloud Gateway基于Spring Framework（支持Spring WebFlux），Project R
        可以通过UrlCleaner接口来实现资源清洗，也就是对于/member/get/{id}这个URL，可以统一归集到/member/get/*资源下，实现UrlCleaner接口，并重写clean方法即可
 
    * 如果Sentinel流控规则没有持久化，当重启被调用API所在微服务模块后，规则会丢失，需要重新添加
+
+4. 通过线程数来进行流量控制
+
+   要求：通过Sentinel实现流量控制，当调用member-service-nacos-provider-10004的/member/get/*接口/API时，限制只有一个工作线程，否则直接失败，抛异常
+
+   注意事项和细节：
+
+   1. 当请求一次微服务的API接口时，后台会启动一个线程
+   2. 阈值类型 QPS 和 线程数 的区别讨论
+      * 如果一个线程平均执行时间为0.05秒，就说明在1秒内，可以执行20次，相当于QPS为20
+      * 如果一个线程平均执行时间为2秒，说明2秒钟内，才能执行1次请求
 
