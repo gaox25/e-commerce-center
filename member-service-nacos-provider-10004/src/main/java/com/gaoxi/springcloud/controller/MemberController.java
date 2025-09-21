@@ -33,17 +33,25 @@ public class MemberController {
      blockHandler = "handlerMethod1" 指定使用全局限流处理类的哪个方法来处理限流信息
      fallbackClass = CustomGlobalFallbackHandler.class 全局fallback处理类，来处理java异常或业务异常
      fallback = "fallbackHandlerMethod1" 指定使用全局fallback处理类的哪个方法来处理java异常或业务异常
+     exceptionsToIgnore = {RuntimeException.class} 表示如果t6抛出了这样一个异常，不再使用全局fallback处理类处理，而是使用系统默认方式处理
      */
     @GetMapping("/t6")
     @SentinelResource(value = "t6",
                       blockHandlerClass = CustomGlobalBlockHandler.class,
                       blockHandler = "handlerMethod1",
                       fallbackClass = CustomGlobalFallbackHandler.class,
-                      fallback = "fallbackHandlerMethod1")
+                      fallback = "fallbackHandlerMethod1",
+                      //exceptionsToIgnore = {RuntimeException.class})
+                      exceptionsToIgnore = {NullPointerException.class})
     public Result t6() {
         //假定：当访问t6资源次数为5的倍数时，就出现java异常
         if (++num % 5 == 0) {
-            throw new RuntimeException("num的值异常 num = " + num);
+            //throw new RuntimeException("num的值异常 num = " + num);
+            throw new NullPointerException("空指针异常 num = " + num);
+        }
+        //当访问t6资源次数为6的倍数时，就抛出一个Runtime异常
+        if (num % 6 == 0) {
+            throw new RuntimeException("RuntimeException num = " + num);
         }
 
         log.info("执行t6() 线程id = {}", Thread.currentThread().getId());

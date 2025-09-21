@@ -822,6 +822,10 @@ Spring Cloud Gateway基于Spring Framework（支持Spring WebFlux），Project R
 
 实践：编写一个自定义全局fallback处理类，处理java异常/业务异常
 
+##### exceptionsToIgnore
+
+如果希望忽略某个异常不被fallback处理类处理，可以使用exceptionsToIgnore
+
 
 
 
