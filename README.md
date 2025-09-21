@@ -814,6 +814,14 @@ Spring Cloud Gateway基于Spring Framework（支持Spring WebFlux），Project R
 
 验证地址：http://localhost:10004/t6
 
+##### fallback/自定义全局fallback处理类
+
+@SentinelResource中的blockHandler只负责超出Sentinel控制台配置的限流规则的情况处理
+
+而@SentinelResource中的fallback负责Java异常/业务异常
+
+实践：编写一个自定义全局fallback处理类，处理java异常/业务异常
+
 
 
 

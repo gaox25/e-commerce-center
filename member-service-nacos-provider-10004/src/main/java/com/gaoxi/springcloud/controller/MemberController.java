@@ -5,6 +5,7 @@ import com.alibaba.csp.sentinel.slots.block.BlockException;
 import com.gaoxi.springcloud.entity.Member;
 import com.gaoxi.springcloud.entity.Result;
 import com.gaoxi.springcloud.handler.CustomGlobalBlockHandler;
+import com.gaoxi.springcloud.handler.CustomGlobalFallbackHandler;
 import com.gaoxi.springcloud.service.MemberService;
 import com.sun.deploy.security.BlockedException;
 import lombok.extern.slf4j.Slf4j;
@@ -30,12 +31,21 @@ public class MemberController {
      value = "t6" 表示Sentinel限流资源的名称
      blockHandlerClass = CustomGlobalBlockHandler.class 全局限流处理类
      blockHandler = "handlerMethod1" 指定使用全局限流处理类的哪个方法来处理限流信息
+     fallbackClass = CustomGlobalFallbackHandler.class 全局fallback处理类，来处理java异常或业务异常
+     fallback = "fallbackHandlerMethod1" 指定使用全局fallback处理类的哪个方法来处理java异常或业务异常
      */
     @GetMapping("/t6")
     @SentinelResource(value = "t6",
                       blockHandlerClass = CustomGlobalBlockHandler.class,
-                      blockHandler = "handlerMethod1")
+                      blockHandler = "handlerMethod1",
+                      fallbackClass = CustomGlobalFallbackHandler.class,
+                      fallback = "fallbackHandlerMethod1")
     public Result t6() {
+        //假定：当访问t6资源次数为5的倍数时，就出现java异常
+        if (++num % 5 == 0) {
+            throw new RuntimeException("num的值异常 num = " + num);
+        }
+
         log.info("执行t6() 线程id = {}", Thread.currentThread().getId());
         return Result.success("200", "t6()执行OK~~");
     }
