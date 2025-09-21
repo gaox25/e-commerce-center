@@ -1,8 +1,11 @@
 package com.gaoxi.springcloud.controller;
 
+import com.alibaba.csp.sentinel.annotation.SentinelResource;
+import com.alibaba.csp.sentinel.slots.block.BlockException;
 import com.gaoxi.springcloud.entity.Member;
 import com.gaoxi.springcloud.entity.Result;
 import com.gaoxi.springcloud.service.MemberService;
+import com.sun.deploy.security.BlockedException;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -100,6 +103,28 @@ public class MemberController {
         } else {
             return Result.error("401", "添加会员失败了");
         }
+    }
+
+    //完成对热点key限流的测试
+    /*
+     分析：
+     1.@SentinelResource用来指定Sentinel限流资源的
+     2.value="news" 表示sentinel限流资源的名称，由程序员指定
+     3.blockHandler = "newsBlockHandler" 当出现限流时，由这个方法来进行处理
+     */
+    @GetMapping("/news")
+    @SentinelResource(value = "news", blockHandler = "newsBlockHandler") //Sentinel限流资源
+    public Result queryNews(@RequestParam(value="id",required = false) String id,
+                            @RequestParam(value="type",required = false) String type) {
+        //在实际开发中，新闻应该是到DB或者缓存获取，这里模拟一下就行了
+        log.info("到DB查询新闻");
+        return Result.success("返回新闻 id = " + id + " 新闻，from DB");
+    }
+
+    //热点key限制异常处理方法
+    //传入的第三个参数需要时BlockException，不是BlockedException
+    public Result newsBlockHandler(String id, String type, BlockException blockException) {
+        return Result.success("查询id = " + id + " 新闻，触发了热点key限流保护，sorry....");
     }
 
     //查询的方法/接口
