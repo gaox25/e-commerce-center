@@ -4,6 +4,7 @@ import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.alibaba.csp.sentinel.slots.block.BlockException;
 import com.gaoxi.springcloud.entity.Member;
 import com.gaoxi.springcloud.entity.Result;
+import com.gaoxi.springcloud.handler.CustomGlobalBlockHandler;
 import com.gaoxi.springcloud.service.MemberService;
 import com.sun.deploy.security.BlockedException;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +24,21 @@ public class MemberController {
     //装配MemberService
     @Resource
     private MemberService memberService;
+
+    //这里使用全局限流处理类，显示限流信息
+    /*
+     value = "t6" 表示Sentinel限流资源的名称
+     blockHandlerClass = CustomGlobalBlockHandler.class 全局限流处理类
+     blockHandler = "handlerMethod1" 指定使用全局限流处理类的哪个方法来处理限流信息
+     */
+    @GetMapping("/t6")
+    @SentinelResource(value = "t6",
+                      blockHandlerClass = CustomGlobalBlockHandler.class,
+                      blockHandler = "handlerMethod1")
+    public Result t6() {
+        log.info("执行t6() 线程id = {}", Thread.currentThread().getId());
+        return Result.success("200", "t6()执行OK~~");
+    }
 
     //定义一个执行计数器
     private static int num = 0;

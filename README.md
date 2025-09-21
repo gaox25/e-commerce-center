@@ -804,7 +804,15 @@ Spring Cloud Gateway基于Spring Framework（支持Spring WebFlux），Project R
 
    ![System-Rule-Entry-QPS](/readme-assets/System-Rule-Entry-QPS.png)
 
+#### @SentinelResource
 
+##### 自定义全局限流处理类
+
+验证配置
+
+![Custom-Global-Block-Handler](/readme-assets/Custom-Global-Block-Handler.png)
+
+验证地址：http://localhost:10004/t6
 
 
 
