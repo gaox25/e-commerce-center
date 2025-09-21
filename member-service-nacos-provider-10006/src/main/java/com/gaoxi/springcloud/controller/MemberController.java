@@ -44,10 +44,11 @@ public class MemberController {
     //查询的方法/接口
     //这里使用url的占位符+@PathVariable
     @GetMapping("/member/get/{id}")
-    public Result getMemberById(@PathVariable("id") Long id, HttpServletRequest request) {
+    //public Result getMemberById(@PathVariable("id") Long id, HttpServletRequest request) {
+    public Result getMemberById(@PathVariable("id") Long id) {
         //添加HttpServletRequest，验证filter
-        String color = request.getParameter("color");
-        String address = request.getParameter("address");
+        //String color = request.getParameter("color");
+        //String address = request.getParameter("address");
         //模拟超时，休眠5s
 //        try {
 //            TimeUnit.MILLISECONDS.sleep(5000);

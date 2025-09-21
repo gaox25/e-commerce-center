@@ -826,7 +826,16 @@ Spring Cloud Gateway基于Spring Framework（支持Spring WebFlux），Project R
 
 如果希望忽略某个异常不被fallback处理类处理，可以使用exceptionsToIgnore
 
+##### 接入Sentinel的方式
 
+1. 代码方式（硬编码，侵入性强，不推荐）
+2. 注解方式（低侵入性，前面用过，推荐）
+
+### OpenFeign + Sentinel对远程调用熔断降级
+
+![Nacos-Sentinel-Intergration](/readme-assets/Nacos-Sentinel-Intergration.png)
+
+通过消费微服务consumer，使用OpenFeign远程调用访问服务提供微服务，并通过Sentinel对远程调用进行熔断降级
 
 
 

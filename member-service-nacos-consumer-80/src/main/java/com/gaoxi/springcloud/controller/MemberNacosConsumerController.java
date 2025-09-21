@@ -2,7 +2,10 @@ package com.gaoxi.springcloud.controller;
 
 import com.gaoxi.springcloud.entity.Member;
 import com.gaoxi.springcloud.entity.Result;
+import com.gaoxi.springcloud.service.MemberOpenFeignService;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,9 +24,22 @@ public class MemberNacosConsumerController {
     //     这里是小写，不同于Eureka的大写
     public static final String MEMBER_SERVICE_NACOS_PROVIDER_URL =
             "http://member-service-nacos-provider";
+    private static final Logger log = LoggerFactory.getLogger(MemberNacosConsumerController.class);
 
     @Resource
     private RestTemplate restTemplate;
+
+    //装配MemberOpenFeignService
+    @Resource
+    private MemberOpenFeignService memberOpenFeignService;
+
+    //编写方法，通过OpenFeign实现远程调用
+    @GetMapping("/member/openfeign/consumer/get/{id}")
+    public Result<Member> getMemberOpenfiegnById(@PathVariable("id") Long id) {
+        //这里使用OpenFeign接口方式调用
+        log.info("调用方式是OpenFeign......");
+        return memberOpenFeignService.getMemberById(id);
+    }
 
     //方法/接口 添加Member对象到数据库里的表
     @PostMapping("/member/nacos/consumer/save")
