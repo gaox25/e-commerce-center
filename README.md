@@ -837,6 +837,14 @@ Spring Cloud Gateway基于Spring Framework（支持Spring WebFlux），Project R
 
 通过消费微服务consumer，使用OpenFeign远程调用访问服务提供微服务，并通过Sentinel对远程调用进行熔断降级
 
+如果10004/10006，两个服务挂掉/延时，而80端口仍然高并发调用，非常容易造成线程堆积，容易导致系统雪崩
+
+解决方案：使用Sentinel的熔断降级机制，快速返回降级信息，防止线程堆积
+
+使用OpenFeign + Sentinel后，如果10004的业务逻辑中添加休眠2s的代码，则会自动调用相应时间更短的10006的服务
+
+注：OpenFeign默认超时时间为1s
+
 
 
 

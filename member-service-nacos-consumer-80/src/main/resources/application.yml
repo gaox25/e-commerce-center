@@ -9,6 +9,18 @@ spring:
     nacos:
       discovery:
         server-addr: localhost:8848 #Nacos Server的地址
+    #配置Sentinel
+    sentinel:
+      transport:
+        dashboard: localhost:9999 #Sentinel Dashboard地址
+        port: 8719 #如果8719被占用，则会从8719开始加1，知道有一个可用的端口为止
+
+#配置暴露所有的监控点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
 
 
 logging:
