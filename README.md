@@ -901,6 +901,24 @@ Spring Cloud Gateway基于Spring Framework（支持Spring WebFlux），Project R
 
 1. 在Nacos Server中配置Sentinel流控规则的Data Id是自己指定的，比如为member-service-nacos-consumer-80，只要在sentinel client/微服务的application.yml的datasource.ds1.nacos.dataId的值保持一致即可
 
+### Seata
+
+#### Seata基础
+
+简单的说：一次业务操作需要跨多个数据源或需要跨多个系统进行远程调用，就会产生分布式事务问题 ==> 引出Seata，Seata可以解决分布式事务问题
+
+分布式事务问题：分布式微服务架构下的全局数据一致性问题
+
+解决方案：Seata
+
+什么是Seata：Seata是一款开源的分布式事务解决方案，致力于在微服务架构下提供高性能和简单易用的分布式事务服务
+
+#### Seata的安装配置
+
+看笔记，主要解决了mysql-connector.jar也就是驱动的问题，安装完成后，Seata将会作为一个微服务注册到Nacos中
+
+![Seata-Configured-Nacos](/readme-assets/Seata-Configured-Nacos.png)
+
 
 
 

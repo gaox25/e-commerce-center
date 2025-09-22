@@ -25,6 +25,8 @@
     <file url="file://$PROJECT_DIR$/member-service-provider-10000/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/member-service-provider-10002/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/member-service-provider-10002/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/seata_storage_micro_service-10010/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/seata_storage_micro_service-10010/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
   </component>
