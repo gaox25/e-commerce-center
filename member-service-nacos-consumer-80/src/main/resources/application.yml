@@ -14,6 +14,15 @@ spring:
       transport:
         dashboard: localhost:9999 #Sentinel Dashboard地址
         port: 8719 #如果8719被占用，则会从8719开始加1，知道有一个可用的端口为止
+      datasource:
+        ds1:
+          #流控规则是从nacos server配置中心获取的，这里也可能是redis，也就是从redis中获取流控规则
+          nacos:
+            server-addr: localhost:8848 #指定nacos server配置中心地址
+            dataId: member-service-nacos-consumer-80 #nacos server配置中心的Data Id
+            groupId: DEFAULT_GROUP #指定Nacos Server配置中心的组
+            data-type: json #指定配置流控规则的数据类型
+            rule-type: flow #指定配置的规则的类型，flow-流控规则，grade-降级规则
 
 #配置暴露所有的监控点
 management:

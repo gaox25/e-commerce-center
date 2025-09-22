@@ -12,6 +12,13 @@
     <artifactId>member-service-nacos-consumer-80</artifactId>
 
     <dependencies>
+
+        <!-- 引入Sentinel和Nacos持久化整合依赖 使用版本仲裁 -->
+        <dependency>
+            <groupId>com.alibaba.csp</groupId>
+            <artifactId>sentinel-datasource-nacos</artifactId>
+        </dependency>
+
         <!-- 引入Sentinel starter即场景启动器，仍然使用版本仲裁 -->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>

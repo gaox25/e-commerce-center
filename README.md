@@ -845,6 +845,62 @@ Spring Cloud Gateway基于Spring Framework（支持Spring WebFlux），Project R
 
 注：OpenFeign默认超时时间为1s
 
+### 规则持久化
+
+如果Sentinel流控规则没有持久化，当重启调用API/接口所在微服务后，规则就会丢失，需要重新加入
+
+解决方案：通过Nacos进行持久化
+
+规则持久化方案：
+
+1. 使用阿里云的AHAS（付费）
+2. 在Nacos Server配置规则，完成持久化，官方推荐
+3. datasource支持：nacos，redis，apollo，zipkin，file
+
+方案原理图
+
+![Nacos-Persisting-Sentinel-Rules](/readme-assets/Nacos-Persisting-Sentinel-Rules.png)
+
+需求
+
+1. 为member-service-nacos-consumer-80微服务的/member/openfeign/consumer/get/1 API接口添加流控规则QPS=1/快速失败
+2. 要求将该流控规则加入到nacos server配置中心，实现持久化
+
+实现
+
+1. 在Nacos Server中添加配置
+
+   ![Nacos-Sentinel-Configuration](/readme-assets/Nacos-Sentinel-Configuration.png)
+
+   ![Sentinel-Nacos-Field-Definition](/readme-assets/Sentinel-Nacos-Field-Definition.png)
+
+2. 在member-service-nacos-consumer-80中引入Sentinel和Nacos持久化整合依赖
+
+   ```xml
+   <dependency>      
+     <groupId>com.alibaba.csp</groupId>
+     <artifactId>sentinel-datasource-nacos</artifactId>
+   </dependency>
+   ```
+
+3. 在member-service-nacos-consumer-80的application.yml中添加datasource
+
+   ```yaml
+         datasource:
+           ds1:
+             #流控规则是从nacos server配置中心获取的，这里也可能是redis，也就是从redis中获取流控规则
+             nacos:
+               server-addr: localhost:8848 #指定nacos server配置中心地址
+               dataId: member-service-nacos-consumber-80 #nacos server配置中心的Data Id
+               groupId: DEFAULT_GROUP #指定Nacos Server配置中心的组
+               data-type: json #指定配置流控规则的数据类型
+               rule-type: flow #指定配置的规则的类型，flow-流控规则，degrade-降级规则，param-flow 热点规则， system-系统规则
+   ```
+
+注意事项
+
+1. 在Nacos Server中配置Sentinel流控规则的Data Id是自己指定的，比如为member-service-nacos-consumer-80，只要在sentinel client/微服务的application.yml的datasource.ds1.nacos.dataId的值保持一致即可
+
 
 
 
