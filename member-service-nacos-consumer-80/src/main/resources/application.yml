@@ -21,7 +21,10 @@ management:
     web:
       exposure:
         include: '*'
-
+#OpenFeign和Sentinel整合
+feign:
+  sentinel:
+    enabled: true
 
 logging:
   level:

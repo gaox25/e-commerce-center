@@ -5,7 +5,8 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-@FeignClient(value = "member-service-nacos-provider")
+@FeignClient(value = "member-service-nacos-provider",
+             fallback = MemberFeignFallbackService.class)
 public interface MemberOpenFeignService {
     /*
      1.远程调用方式是GET方式
