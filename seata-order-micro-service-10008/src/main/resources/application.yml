@@ -1,9 +1,9 @@
 server:
-  port: 10010
+  port: 10008
 
 spring:
   application:
-    name: seata-storage-micro-service
+    name: seata-order-micro-service
   cloud:
     alibaba:
       seata:
@@ -14,7 +14,7 @@ spring:
         server-addr: localhost:8848
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
-    url: jdbc:mysql://localhost:3306/storage_micro_service
+    url: jdbc:mysql://localhost:3306/order_micro_service
     username: root
     password:
 #配置seata日志输出

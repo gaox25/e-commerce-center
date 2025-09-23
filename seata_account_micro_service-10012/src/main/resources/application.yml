@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: seata_account_micro_service
+    name: seata-account-micro-service
   cloud:
     alibaba:
       seata:

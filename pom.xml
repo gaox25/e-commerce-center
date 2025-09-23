@@ -29,6 +29,7 @@
     <module>e-commerce-nacos-config-client5000</module>
     <module>seata_storage_micro_service-10010</module>
     <module>seata_account_micro_service-10012</module>
+    <module>seata-order-micro-service-10008</module>
   </modules>
 
   <properties>
