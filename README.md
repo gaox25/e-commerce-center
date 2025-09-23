@@ -919,6 +919,62 @@ Spring Cloud Gateway基于Spring Framework（支持Spring WebFlux），Project R
 
 ![Seata-Configured-Nacos](/readme-assets/Seata-Configured-Nacos.png)
 
+#### Seata的工作机制
+
+1. Seata分布式事务处理过程-ID + 三组件模型
+
+2. 工作原理示意图
+
+   ![Seata-Mechanism](//readme-assets/Seata-Mechanism.png)
+
+3. 技术词汇
+
+   * XID：Transaction ID，全局唯一的事务ID
+   * TC：Transaction Coordination，事务协调器，维护全局事务的运行状态，负责协调并驱动全局事务的提交或回滚
+   * TM：Transaction Manager，控制全局事务的边界，负责开启一个全局事务，并最终发起全局提交或全局回滚的决议
+   * RM：Resource Manager，控制分支事务，负责分支注册，状态汇报，并接收事务协调器的命令，驱动分支（本地）事务的提交和回滚
+
+4. 总结：
+
+   * TM向TC申请开启一个全局事务，全局事务创建成功并生成一个全局唯一的XID
+
+   * XID在微服务调用链路的上线文传播
+
+   * RM向TC注册分支事务，将其纳入XID对应全局事务的管辖
+
+   * TM向TC发起针对XID的全局提交或回滚决议
+
+   * TC调度XID管辖下的全部分支事务完成提交或回滚请求
+
+   * 工作流程：
+
+     ![Seata-Work-Procedure](/readme-assets/Seata-Work-Procedure.png)
+
+5. Seata事务模式
+
+   * AT（无侵入模式，默认模式）
+
+     分以下阶段
+
+     1. 一阶段加载
+        * 解析SQL语义，找到业务SQL要更新的业务数据，在业务数据更新前，将其保存成"before image"（前置镜像）
+        * 执行"业务SQL"更新业务数据，在业务数据更新之后，将其保存成"after image"（后置镜像）
+        * 最后生成行锁
+        * 以上操作全部在一个数据库事务内完成，这样就保证了一阶段操作的原子性
+     2. 二阶段提交
+        * 一阶段如果是顺利提交
+        * 因为"业务SQL"在一阶段已经提交至数据库，所以Seata框架只需将一阶段保存的快照数据和行锁删除，完成数据清理即可
+     3. 二阶段回滚
+        * 二阶段如果是回滚的话，Seata就需要回滚一阶段已经执行的"业务SQL"，还原业务数据
+        * 回滚方式便是使用"before image"还原业务数据，但在还原前要首先校验脏写，对比“数据库当前业务数据”和"after image"，如果两份数据完全一致就说明没有脏写，可以还原业务数据
+        * 如果不一致就说明有脏写，出现脏写就需要转人工处理
+
+   * TCC
+
+   * SAGA
+
+   * XA
+
 
 
 
