@@ -1,0 +1,27 @@
+server:
+  port: 10012
+
+spring:
+  application:
+    name: seata_account_micro_service
+  cloud:
+    alibaba:
+      seata:
+        #指定事务组名，需要和seata-server中的/conf/file.conf中的对应
+        tx-service-group: gaoxi_order_tx_group
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://localhost:3306/account_micro_service
+    username: root
+    password:
+#配置seata日志输出
+logging:
+  level:
+    io:
+      seata: info
+
+mybatis:
+  mapperLocations: classpath:mapper/*.xml #指定mapper.xml文件位置，在target/classes/mapper下
