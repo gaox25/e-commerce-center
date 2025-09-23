@@ -3,6 +3,7 @@ package com.gaoxi.springcloud.controller;
 import com.gaoxi.springcloud.entity.Order;
 import com.gaoxi.springcloud.entity.Result;
 import com.gaoxi.springcloud.service.OrderService;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,8 +17,9 @@ public class OrderController {
     /*
      1.这里为了测试方便，形参列表没有使用注解@RequestBody
      2.不使用注解，就使用表单发送测试数据
+     3.测试地址：http://localhost:10008/order/save?userId=666&productId=1&nums=1&money=100
      */
-    @PostMapping("/order/save")
+    @GetMapping("/order/save")
     public Result save(Order order) {
         orderService.save(order);
         return Result.success("订单创建成功", null);

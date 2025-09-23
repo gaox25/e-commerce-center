@@ -13,13 +13,13 @@
     </resultMap>
     <!--配置实现save方法 添加订单 -->
     <insert id="save">
-        insert into `order` (id,user_id,product_id,nums,money,status)
+        insert into t_order (id,user_id,product_id,nums,money,status)
         values (null,#{userId},#{productId},#{nums},#{money},0);
     </insert>
 
     <!--配置实现update- 修改订单状态 这里老师写的比较简单，实际工作中根据业务需求编写即可-->
     <update id="update">
-        update `order` set status = 1
+        update t_order set status = 1
         where user_id=#{userId} and status = #{status};
     </update>
 

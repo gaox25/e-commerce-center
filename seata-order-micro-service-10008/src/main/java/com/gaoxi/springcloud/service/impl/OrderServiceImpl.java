@@ -43,7 +43,7 @@ public class OrderServiceImpl implements OrderService {
 
         log.info("=== 本地修改订单状态 start ===");
         //调用本地方法修改订单状态
-        orderDao.update(order.getUserId(), 1);
+        orderDao.update(order.getUserId(), 0);
         log.info("=== 本地修改订单状态 end ===");
 
         log.info("===创建订单 end===");
